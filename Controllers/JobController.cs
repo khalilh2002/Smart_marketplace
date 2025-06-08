@@ -17,21 +17,26 @@ public class JobController : ControllerBase
     _groqService = groqService;
   }
 
-  [HttpGet("")]
-  public JsonObject GetJobs()
+  [HttpPost("create-from-prompt")]
+  [ProducesResponseType(typeof(JobDto), 200)]
+  [ProducesResponseType(500)]
+  public async Task<ActionResult<JobDto>> CreateJobFromPrompt([FromBody] PromtRequest req)
   {
-    var re = new PromtRequest
+    if (string.IsNullOrWhiteSpace(req?.text))
     {
-      text = " ahemd khalil ben hos"
-    };
-    return _groqService.GetGroqRequestPromt(re);
-  }
+      return BadRequest("The request text cannot be empty.");
+    }
 
-
-  [HttpPost]
-  public Task<AiResponseDto> GetGroq([FromBody] PromtRequest req)
-  {
-    return _groqService.CallGroqAsync(req);
+    try
+    {
+      var jobDto = await _groqService.CreateJobFromPromptAsync(req);
+      return Ok(jobDto);
+    }
+    catch (Exception ex)
+    {
+      // Log the exception ex
+      return StatusCode(500, "An error occurred while processing your request.");
+    }
   }
 
 

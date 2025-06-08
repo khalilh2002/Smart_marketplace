@@ -5,8 +5,8 @@ namespace SmartMarketplace.Service.Interface;
 
 public interface IGroqService
 {
-  public  Task<AiResponseDto> CallGroqAsync(PromtRequest req);
-  public JsonObject GetGroqRequestPromt(PromtRequest promt);
+
+  public Task<JobDto> CreateJobFromPromptAsync(PromtRequest req);
 
 
 }
