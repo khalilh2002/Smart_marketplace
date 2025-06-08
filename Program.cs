@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using SmartMarketplace.Config;
 using SmartMarketplace.Data;
+using SmartMarketplace.Service;
+using SmartMarketplace.Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,11 @@ var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<AppDbContext>(option =>
   option.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
   );
+
+builder.Services.Configure<GroqOptions>(
+  builder.Configuration.GetSection("Groq")
+  );
+builder.Services.AddHttpClient<IGroqService, GroqService>();
 
 
 

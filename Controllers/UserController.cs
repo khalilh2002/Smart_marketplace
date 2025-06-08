@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SmartMarketplace.Controllers // ✅ Use correct namespace
 {
   [ApiController]
-  [Route("api/users")]
+  [Route("api/v1/users")]
   public class UserController : ControllerBase
   {
     [HttpGet]
