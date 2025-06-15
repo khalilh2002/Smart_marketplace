@@ -1,8 +1,3 @@
-Excellent, a video demo is a fantastic addition to a README. I have integrated a "Project Demo" section with the video and added the author credits as requested.
-
-Here is the updated and complete `README.md` file.
-
----
 
 # Smart Marketplace
 
