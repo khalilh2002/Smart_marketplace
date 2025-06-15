@@ -1,15 +1,26 @@
+Excellent, a video demo is a fantastic addition to a README. I have integrated a "Project Demo" section with the video and added the author credits as requested.
+
+Here is the updated and complete `README.md` file.
+
+---
 
 # Smart Marketplace
 
 Smart Marketplace is a full-stack job portal application designed to connect clients with freelancers. It features an intelligent job creation system powered by Groq's LPU Inference Engine, allowing users to generate detailed job postings from simple prompts. The application is built with a modern tech stack, featuring an ASP.NET Core 8 backend and a React (Vite + TypeScript) frontend.
+
+## Project Demo
+
+A complete walkthrough of the application's features, including user authentication, job creation (manual and AI-powered), and admin controls.
+
+https://github.com/user-attachments/assets/95ed109c-d035-46e3-a7d5-2a2b37c0414e
 
 ## Features
 
 - **User Authentication**: Secure login and registration system with JWT (JSON Web Tokens).
 - **Role-Based Access Control**: Differentiated access for regular users and administrators.
 - **AI-Powered Job Creation**: Users can enter a simple text prompt (e.g., "build a coffee shop website") to automatically generate a detailed job posting using the Groq API.
-- **Job Management**: Create, view, and publish job listings.
-- **Admin Dashboard**: A dedicated dashboard for administrators to manage users and jobs (delete, edit).
+- **Job Management**: Create, view, publish, and delete job listings.
+- **Admin Dashboard**: A dedicated dashboard for administrators to manage both users and jobs (edit, delete).
 - **RESTful API**: A well-structured backend API for all frontend interactions.
 
 ## Architecture
@@ -165,3 +176,9 @@ The backend exposes the following RESTful endpoints under the base path `/api/v1
 | `DELETE`| `/jobs/{id}`                | Delete a job posting.                             | Admin        |
 
 ---
+
+## Authors
+
+This project was created by:
+- **El Houssine KHALIL**
+- **Mahdi ID LAHCEN**
