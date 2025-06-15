@@ -1,7 +1,7 @@
 
 # Smart Marketplace
 
-Smart Marketplace is a full-stack job portal application designed to connect clients with freelancers. It features an intelligent job creation system powered by Groq's LPU Inference Engine, allowing users to generate detailed job postings from simple prompts. The application is built with a modern tech stack, featuring an ASP.NET Core 8 backend and a React (Vite + TypeScript) frontend.
+Smart Marketplace is a full-stack job portal application designed to connect clients with freelancers. It features an intelligent job creation system powered by Groq's API , allowing users to generate detailed job postings from simple prompts. The application is built with a modern tech stack, featuring an ASP.NET Core 8 backend and a React (Vite + TypeScript) frontend.
 
 ## Project Demo
 
