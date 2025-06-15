@@ -1,7 +1,13 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SmartMarketplace.Config;
 using SmartMarketplace.Data;
 using SmartMarketplace.Models;
+using SmartMarketplace.Repository;
+using SmartMarketplace.Repository.Interface;
 using SmartMarketplace.Service;
 using SmartMarketplace.Service.Interface;
 
@@ -22,6 +28,54 @@ builder.Services.Configure<GroqOptions>(
   builder.Configuration.GetSection("Groq")
   );
 builder.Services.AddHttpClient<IGroqService, GroqService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
+builder.Services.AddScoped<IGroqService, GroqService>();
+
+
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("AllowFrontend",
+    policy =>
+    {
+      policy.WithOrigins("http://localhost:5173") // replace this with your React app URL
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
+builder.Services.AddIdentity<User, IdentityRole>()
+  .AddEntityFrameworkStores<AppDbContext>()
+  .AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(options =>
+  {
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  })
+  .AddJwtBearer(options =>
+  {
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidateLifetime = true,
+      ValidateIssuerSigningKey = true,
+      ValidIssuer = builder.Configuration["Jwt:Issuer"],
+      ValidAudience = builder.Configuration["Jwt:Audience"],
+      IssuerSigningKey = new SymmetricSecurityKey(
+        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+  });
+
+
+
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IJobService, JobService>();
+
 
 
 
@@ -42,22 +96,17 @@ using (var scope = app.Services.CreateScope())
     context.SaveChanges();
   }
 }
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
-
-
 app.MapControllers(); // ✅ Needed to map route attributes
-
 app.Run();
-
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);

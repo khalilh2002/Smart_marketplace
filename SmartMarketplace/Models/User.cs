@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace SmartMarketplace.Models;
 
-public class User
+public class User : IdentityUser
 {
   [Key]
   public int Id { get; set; }
@@ -15,7 +17,17 @@ public class User
   [EmailAddress]
   public string Email { get; set;}
 
+  public Roles Role { get; set; } = Roles.User;
+
   [Required]
+  [JsonIgnore]
+
   [MinLength(8)]
   public string Password { get; set; }
+}
+
+public enum Roles
+{
+  Admin = 0,
+  User = 1
 }

@@ -1,16 +1,21 @@
+using SmartMarketplace.DTO;
 using SmartMarketplace.Models;
 
 namespace SmartMarketplace.Repository.Interface;
 
 public interface IUserRepository
 {
-  public Task<User?> GetByEmailAsync(string email);
+   Task<User?> GetByEmailAsync(string email);
 
 
-  public Task<User?> GetByIdAsync(int id);
+   Task<User?> GetByIdAsync(int id);
 
-  public Task<IEnumerable<User>> GetAllAsync();
+  Task<IEnumerable<User>> GetAllAsync();
 
-  public Task Insert(User user);
+  Task<User> CreateAsync(User user);
+  Task<User> UpdateAsync(User user);
+
+   Task<User> delete(User user);
+
 
 }

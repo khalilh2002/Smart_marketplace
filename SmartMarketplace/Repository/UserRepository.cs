@@ -30,9 +30,24 @@ public class UserRepository : IUserRepository
     return await context.Users.ToListAsync();
   }
 
-  public async Task Insert(User user)
+  public async Task<User> CreateAsync(User user)
   {
     context.Users.Add(user);
     await context.SaveChangesAsync();
+    return user;
+  }
+
+  public async Task<User> UpdateAsync(User user)
+  {
+    context.Users.Update(user);
+    await context.SaveChangesAsync();
+    return user;
+  }
+
+  public async Task<User> delete(User user)
+  {
+    context.Users.Remove(user);
+    await context.SaveChangesAsync();
+    return user;
   }
 }

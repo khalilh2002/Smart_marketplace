@@ -11,10 +11,12 @@ namespace SmartMarketplace.Controllers;
 [Route("api/v1/jobs")]
 public class JobController : ControllerBase
 {
-   readonly IGroqService _groqService;
-  public JobController(IGroqService groqService)
+  readonly IGroqService _groqService;
+  readonly IJobService _jobService;
+  public JobController(IGroqService groqService , IJobService jobService)
   {
     _groqService = groqService;
+    _jobService = jobService;
   }
 
   [HttpPost("create-from-prompt")]
@@ -37,6 +39,37 @@ public class JobController : ControllerBase
       // Log the exception ex
       return StatusCode(500, "An error occurred while processing your request.");
     }
+  }
+
+  [HttpGet()]
+  public async Task<IActionResult> GetJobAll()
+  {
+    var jobs = await _jobService.GetAll();
+    return Ok(jobs);
+  }
+
+
+  [HttpPost]
+  public async Task<IActionResult> AddJob([FromBody] CreateJobRequest request)
+  {
+    var job = await _jobService.AddJobAsync(request);
+    return CreatedAtAction(nameof(GetJob), new { id = job.Id }, job);
+  }
+
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetJob(int id)
+  {
+    var job = await _jobService.GetJobByIdAsync(id);
+    if (job == null) return NotFound();
+    return Ok(job);
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeleteJob(int id)
+  {
+    var result = await _jobService.DeleteJobAsync(id);
+    if (!result) return NotFound();
+    return NoContent();
   }
 
 

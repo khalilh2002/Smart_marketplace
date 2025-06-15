@@ -1,9 +1,15 @@
+// src/main.tsx
 import React from 'react';
-import App from './App.tsx'; // Assuming your main component is App.tsx
-import './index.css'; // Or './index.scss', './index.sass', etc. for global styles
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import 'bootstrap/dist/js/bootstrap.bundle.min'; // Import Bootstrap JS bundle
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
 );
